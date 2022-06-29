@@ -4204,18 +4204,10 @@ int msm_isp_update_axi_stream(struct vfe_device *vfe_dev, void *arg)
 				pr_err("%s: stream_info is null", __func__);
 				return -EINVAL;
 			}
-			vfe_idx = msm_isp_get_vfe_idx_for_stream(
+                        vfe_idx = msm_isp_get_vfe_idx_for_stream(
 				vfe_dev, stream_info);
-			for (j = 0; j < stream_info->num_planes; j++) {
-				stream_info->plane_cfg[vfe_idx][j] =
-					update_info->plane_cfg[j];
-				for (k = 0; k < stream_info->num_isp; k++) {
-					vfe_dev = stream_info->vfe_dev[k];
-					vfe_dev->hw_info->vfe_ops.axi_ops.
-						cfg_wm_reg(vfe_dev,
-						stream_info, j);
-				}
-			}
+			msm_isp_stream_axi_cfg_update(vfe_dev, stream_info,
+				update_info);
 		}
 		break;
 	}
