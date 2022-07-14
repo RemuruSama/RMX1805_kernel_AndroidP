@@ -50,7 +50,8 @@ export KBUILD_BUILD_HOST=gcp
 function compile() {
 
     echo -e "${CYAN}"
-    make -j$(nproc) O=out ARCH=arm64 MSM_18355_msm8953-perf_defconfig
+    make clean -j$(nproc) ; make mrproper -j$(nproc)
+    make -j$(nproc) O=out ARCH=arm64 msm8953-perf_defconfig
     make -j$(nproc) O=out \
                     ARCH=arm64 \
                     CC=clang \
